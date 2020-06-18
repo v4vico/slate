@@ -1,10 +1,7 @@
 ## Payment Request 
 
-> Here is the common and best practice for sending data to Ximpay API with HTTP POST.
-
-```text
+> Here is the common and best practice for sending data to Ximpay API with HTTP POST. 
 Token generated on 1/31/2015.
-```
 
 ```html
 <form action="https://secure.ximpay.com/01/?act=reqpay" id="Payment" name="Payment" 
@@ -22,6 +19,12 @@ method="POST" >
 </form>
 ```
 
+Ximpay URL | Method
+------|-------
+https://secure.ximpay.com/09SDP/?act=reqpay | HTTP/S POST Protocol
+
+Parameter explanation:
+
 No | Parameters | Type | Length | Description
 ---|----|----|---|----
 1 | PARTNERID | Alphanumeric | 5 | Merchant partner ID. e.g., Triyakom partner id is TYKM
@@ -30,19 +33,30 @@ No | Parameters | Type | Length | Description
 4 | CBPARAM | Alphanumeric | 512 | Your callback parameter. e.g., You want to send your own transaction identifier(ID) "123456", when Ximpay send payment status to your callback URL.
 5 | TOKEN | Alphanumeric | 35 | Token for request. Will be explained in chapter 3.1.1.
 6 | OP | Alphanumeric | 20 | Telecommunication operator code. SF (Smartfren)
-7 | MSISDN | Numeric | 25 | User cellphone number. Format example "0881xx" or "62881xx". (Optional)
+7 | MSISDN | Numeric | 25 | User cellphone number. Format example “0881xx” or “62881xx”. (Optional)
 8 | USERNAME | Alphanumeric | 100 | User identity, can be in form of email also. (Optional)
 
 If all parameter valid, then Ximpay page will appeared. Else error message will be displayed on browser.
 
-### Generate Token
+**Generate Token**
 
 Here will be explained how to create ximpay token. Actually token consist of all parameter that 
 merchant use when requesting payment to Ximpay. The difference are date and secret key 
 parameter also operator code.
 
-> Token Example in Java:
+Parameters | Description
+-------|-------
+Partner Id | Same partner id from request
+Item Id | Same item id from request
+Redirect URL | Same Redirect URL (without encode)
+Callback Parameter | Same callback parameter (without encode)
+Date | Format ("M/d/yyyy") . e.g., 1/31/2015 (No leading zero)
+Secret Key | Secret key will be generated and given to you after registered as Ximpay Partner. 
 
+
+Below is example of ximpay parameter that will be encrypted. We need to join and set to lowercase before encrypt to md5.
+
+> Example in Java:
 
 ```java 
 String partnerId = "TYKM";
@@ -56,15 +70,6 @@ String lower = (partnerId + itemId + url + callbackParam + date + secretKey).toL
 String token = getMD5(lower);
 ```
 
-Parameters | Description
--------|-------
-Partner Id | Same partner id from request
-Item Id | Same item id from request
-Redirect URL | Same Redirect URL (without encode)
-Callback Parameter | Same callback parameter (without encode)
-Date | Format ("M/d/yyyy") . e.g., 1/31/2015 (No leading zero)
-Secret Key | Secret key will be generated and given to you after registered as Ximpay Partner. 
-
-<aside class="notice">
-Since there is case where MD5 result in UPPERCASE, please <code>LOWERCASE</code> your MD5 result.
+<aside class="success">
+MD5 ( LowerCase ( Partner Id + Item Id + Redirect URL + Callback Parameter + Date + Secret Key ) )
 </aside>

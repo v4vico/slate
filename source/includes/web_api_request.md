@@ -1,12 +1,10 @@
 ## Payment Request
 
-Mobile Network Operator | Ximpay URL | Method
------|------|-------
-Telkomsel | https://secure.ximpay.com/api/04/Gopayment.aspx | HTTP/S POST Protocol
-Indosat | https://secure.ximpay.com/api/07/Gopayment.aspx | HTTP/S POST Protocol
+> Here is the common and best practice for sending data to Ximpay Web API with HTTP POST. 
 
-> Here is the common and best practice for sending data to Ximpay API with HTTP POST. 
+```text
 Token generated on 1/31/2015.
+```
 
 ```json
 {
@@ -19,3 +17,11 @@ Token generated on 1/31/2015.
     "username": "user@triyakom.com"
 }
 ```
+
+HTTP Method : HTTP/S POST
+
+Mobile Network Operator | Ximpay URL
+--- | ---
+Telkomsel | https://secure.ximpay.com/api/04/Gopayment.aspx
+Indosat | https://secure.ximpay.com/api/07/Gopayment.aspx
+
